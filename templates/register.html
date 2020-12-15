@@ -1,0 +1,71 @@
+{% extends "layouthomepage.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register" method="post">
+        <input autocomplete="off" autofocus name="username" placeholder="Username" type="text">
+        <input autocomplete="off" autofocus name="password" placeholder="Password" type="text">
+        <input autocomplete="off" autofocus name="confirmation" placeholder="Confirm Password" type="text">
+
+    <!-- Allow users to pick an animal avatar -->
+    <h4>Which of the following would you like as your avatar?</h4>
+    <br>
+    <img src="/static/lion.jpeg" alt="Avatar" class="avatar">
+    <img src="/static/giraffe.jpeg" alt="Avatar" class="avatar">
+    <img src="/static/panda.jpeg" alt="Avatar" class="avatar">
+    <img src="/static/fox.jpeg" alt="Avatar" class="avatar">
+    <img src="/static/elephant.jpeg" alt="Avatar" class="avatar"><br>
+
+        <input type="radio" id="animal" name="pickavatar" value="/static/lion.jpeg">
+            <label for="lion">Lion</label><br>
+            <input type="radio" id="animal" name="pickavatar" value="/static/giraffe.jpeg">
+            <label for="giraffe">Giraffe</label><br>
+            <input type="radio" id="animal" name="pickavatar" value="/static/panda.jpeg">
+            <label for="panda">Panda</label><br>
+            <input type="radio" id="animal" name="pickavatar" value="/static/fox.jpeg">
+            <label for="fox">Fox</label><br>
+            <input type="radio" id="animal" name="pickavatar" value="/static/elephant.jpeg">
+            <label for="elephant">Elephant</label><br>
+
+        <!-- Ask if users want sound effects during the social story quizzes-->
+        <h4>Would you prefer sound effects to be on or off during the social stories?</h4>
+        <input type="radio" id="sound" name="sound" value="on">
+            <label for="on">On</label><br>
+            <input type="radio" id="sound" name="sound" value="off">
+            <label for="off">Off</label><br>
+
+        <!-- Ask users which color the user wants as the background for the website -->
+        <h4>What color would you like as your main color for the website?</h4>
+        <input type="radio" id="color" name="pickcolor" value="pink">
+            <label for="pink">Pink</label><br>
+        <input type="radio" id="color" name="pickcolor" value="#FF6A00">
+            <label for="yellow">Orange</label><br>
+        <input type="radio" id="color" name="pickcolor" value="#FFF76B">
+            <label for="red">Yellow</label><br>
+        <input type="radio" id="color" name="pickcolor" value="#77BB41">
+            <label for="green">Green</label><br>
+        <input type="radio" id="color" name="pickcolor" value="#1AAFF9">
+            <label for="lion">Blue</label><br>
+        <input type="radio" id="color" name="pickcolor" value="#D9CAFE">
+            <label for="pink">Purple</label><br>
+        <input type="radio" id="color" name="pickcolor" value="#C0C0C0">
+            <label for="red">Gray</label><br>
+
+        <!-- Have users pick a security question and write in their answer in case they forget their password -->
+        <h4>Pick a security question in case you forget your password</h4>
+        <select name="securityq" id="securityq">
+            <option value="What is the name of your first pet?"> What is the name of your first pet?</option>
+            <option value="What is the name of your hometown?"> What is the name of your hometown?</option>
+            <option value="What is the name of your childhood best friend?"> What is the name of your childhood best friend?</option>
+            <option value="Who was your childhood hero?"> Who was your childhood hero? </option>
+        </select>
+        <input autocomplete="off" placeholder="answer" name="security" type="text" id="security"></input>
+        <br>
+        <br>
+        <button class="btn btn-info" type="submit">Register </button>
+
+    </form>
+{% endblock %}

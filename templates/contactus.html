@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Contact Us
+{% endblock %}
+
+{% block main %}
+    <!--html and css code adapted from https://www.w3schools.com/howto/howto_css_contact_form.asp-->
+    <h5 style="text-align:center">We'd love to get your feedback! Please let us know if you have any suggestions, questions, or any other comements.
+    If you would like a response from us, please also provide your name and email address.</h5>
+    <div class="container" id="contactus">
+      <form action="/contactus" method="post">
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name...">
+
+        <label for="fname">Email</label>
+        <input type="text" id="email" name="email" placeholder="Your email address...">
+
+        <label for="message">Subject</label>
+        <textarea id="message" name="message" placeholder="Write something..." style="height:200px"></textarea>
+
+        <input type="submit" value="Submit">
+
+      </form>
+    </div>
+
+{% endblock %}

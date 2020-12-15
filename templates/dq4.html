@@ -1,0 +1,91 @@
+{% extends "layoutquiz.html" %}
+
+{% block title %}
+    Social Distancing
+{% endblock %}
+
+{% block main %}
+    <h3>When I see my friend, will I sit right next to them or will I sit in a different seat?</h3>
+
+    <table style="width: 60%" class="center">
+      <tr>
+        <td>
+          <!-- Trigger the good modal with a button -->
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" onclick="play()">I will give them extra space and sit in a different seat.</button>
+
+          <!-- Modal -->
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <!--<h4 class="modal-title">Modal Header</h4>-->
+                </div>
+                <div class="modal-body">
+                  <p>Yes, great choice! Let's keep going.</p>
+                  <a href="distance10" class="next">Next &raquo;</a>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </td>
+        <td>
+          <!-- Trigger the bad modal with a button -->
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalwrong">I will sit right next to them.</button>
+
+          <!-- Modal -->
+          <div id="modalwrong" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <!--<h4 class="modal-title">Modal Header</h4>-->
+                </div>
+                <div class="modal-body">
+                  <p>Not quite, let's try again!</p>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Try Again</button>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="row">
+            <div class="column">
+              <img src="/static/farbus.jpeg" alt="Snow" style="width:90%">
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="row">
+            <div class="column">
+              <img src="/static/closebus.jpeg" alt="Forest" style="width:90%">
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+
+    <ul class="pager">
+        <a href="distance9" class="previous">&laquo; Previous</a>
+        <!--<a href="distance10.html" class="next">Next &raquo;</a>-->
+    </ul>
+
+{% endblock %}
