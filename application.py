@@ -8,6 +8,17 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 # Used helpers.py from Finance pset
 from helpers import apology, login_required
+import urlparse
+import psycopg2
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+conn = psycopg2.connect(
+ database=url.path[1:],
+ user=url.username,
+ password=url.password,
+ host=url.hostname,
+ port=url.port
+)
 
 app = Flask(__name__)
 
@@ -28,7 +39,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///socialstories.db")
+db = SQL(os.environ["DATABASE_URL"])
 
 # Render the homepage
 @app.route("/")
