@@ -11,14 +11,14 @@ from helpers import apology, login_required
 import urllib.parse as up
 import psycopg2
 up.uses_netloc.append("postgres")
-url = up.urlparse(os.environ["DATABASE_URL"])
-conn = psycopg2.connect(
- database=url.path[1:],
- user=url.username,
- password=url.password,
- host=url.hostname,
- port=url.port
-)
+# url = up.urlparse(os.environ["DATABASE_URL"])
+# conn = psycopg2.connect(
+#  database=url.path[1:],
+#  user=url.username,
+#  password=url.password,
+#  host=url.hostname,
+#  port=url.port
+# )
 
 app = Flask(__name__)
 
@@ -39,7 +39,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL(os.environ["DATABASE_URL"])
+# db = SQL(os.environ["DATABASE_URL"])
 
 # Render the homepage
 @app.route("/")
@@ -49,45 +49,45 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
+    pass 
     # Forget any user_id
-    session.clear()
+    # session.clear()
 
-    # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
+    # # User reached route via POST (as by submitting a form via POST)
+    # if request.method == "POST":
 
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            return apology("Input your username")
+    #     # Ensure username was submitted
+    #     if not request.form.get("username"):
+    #         return apology("Input your username")
 
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            return apology("Input your password")
+    #     # Ensure password was submitted
+    #     elif not request.form.get("password"):
+    #         return apology("Input your password")
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+    #     # Query database for username
+    #     rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("Wrong password")
-        session["user_id"] = rows[0]["id"]
-        # find out which preferences the user has
-        avatar = db.execute("SELECT avatar FROM users WHERE username = ?", request.form.get("username"))
-        sound = db.execute("SELECT sound FROM users WHERE username = ?", request.form.get("username"))
-        color = db.execute("SELECT color FROM users WHERE username = ?", request.form.get("username"))
-        # Remember which user has logged in and remember their preferences as session[]
-        session["username"] = request.form.get("username")
-        session["link"] = avatar[0]['avatar']
-        session["sound"] = sound[0]['sound']
-        session["color"] = color[0]['color']
-        session["user_id"] = rows[0]["id"]
+    #     # Ensure username exists and password is correct
+    #     if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+    #         return apology("Wrong password")
+    #     session["user_id"] = rows[0]["id"]
+    #     # find out which preferences the user has
+    #     avatar = db.execute("SELECT avatar FROM users WHERE username = ?", request.form.get("username"))
+    #     sound = db.execute("SELECT sound FROM users WHERE username = ?", request.form.get("username"))
+    #     color = db.execute("SELECT color FROM users WHERE username = ?", request.form.get("username"))
+    #     # Remember which user has logged in and remember their preferences as session[]
+    #     session["username"] = request.form.get("username")
+    #     session["link"] = avatar[0]['avatar']
+    #     session["sound"] = sound[0]['sound']
+    #     session["color"] = color[0]['color']
+    #     session["user_id"] = rows[0]["id"]
 
-        # Redirect user to home page
-        return redirect("/")
+    #     # Redirect user to home page
+    #     return redirect("/")
 
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("login.html")
+    # # User reached route via GET (as by clicking a link or via redirect)
+    # else:
+    #     return render_template("login.html")
 
 @app.route("/logout")
 def logout():
@@ -102,137 +102,142 @@ def logout():
 @app.route("/forgotpassword", methods=["GET", "POST"])
 def forgotpassword():
     """Retrieves reset password page if user has forgotten password"""
-    if request.method == "GET":
-        return render_template("forgotpassword.html")
-    if request.method == "POST":
-        # Retreive username from form
-        username = request.form.get("username")
-        # Retrieve security question for associated username
-        security = db.execute("SELECT securityq FROM users WHERE username = ?", username)
-        try:
-            securityq = security[0]['securityq']
-        except:
-            # Return apology if an invalid username is inputted
-            return apology("Invalid Username")
-        # Send user to reset password page, along with their securityq information
-        return render_template("resetpassword.html", securityq=securityq, username=username)
+    pass
+    # if request.method == "GET":
+    #     return render_template("forgotpassword.html")
+    # if request.method == "POST":
+    #     # Retreive username from form
+    #     username = request.form.get("username")
+    #     # Retrieve security question for associated username
+    #     security = db.execute("SELECT securityq FROM users WHERE username = ?", username)
+    #     try:
+    #         securityq = security[0]['securityq']
+    #     except:
+    #         # Return apology if an invalid username is inputted
+    #         return apology("Invalid Username")
+    #     # Send user to reset password page, along with their securityq information
+    #     return render_template("resetpassword.html", securityq=securityq, username=username)
 
 @app.route("/resetpassword", methods=["GET", "POST"])
 def resetpassword():
-    """Allow users to reset password if they forgot it"""
-    if request.method =="GET":
-        return render_template("resetpassword.html")
-    if request.method == "POST":
-        # Get user answers from form: their username, their securityq (automatically filled out from forgotpassword), their answer, new password, and confirm new password
-        username = request.form.get("username")
-        securityq = request.form.get("securityq")
-        response = request.form.get("response")
-        password = request.form.get("password")
-        confirmation = request.form.get("confirmation")
+    pass
+    # """Allow users to reset password if they forgot it"""
+    # if request.method =="GET":
+    #     return render_template("resetpassword.html")
+    # if request.method == "POST":
+    #     # Get user answers from form: their username, their securityq (automatically filled out from forgotpassword), their answer, new password, and confirm new password
+    #     username = request.form.get("username")
+    #     securityq = request.form.get("securityq")
+    #     response = request.form.get("response")
+    #     password = request.form.get("password")
+    #     confirmation = request.form.get("confirmation")
 
-        try:
-            # Check to see if username is correct and retrieve corresponding answer to that users security question
-            answer = db.execute("SELECT securitya FROM users WHERE username = ?", username)
-        except:
-            return apology("Invalid Username")
+    #     try:
+    #         # Check to see if username is correct and retrieve corresponding answer to that users security question
+    #         answer = db.execute("SELECT securitya FROM users WHERE username = ?", username)
+    #     except:
+    #         return apology("Invalid Username")
 
-        answers = answer[0]["securitya"]
-        # Check to see if answers in sql database matches user response
-        if answers != response:
-            return apology("Incorrect answer to security question")
-        if answers == response:
-            # If they do match, update users password and redirect back to login
-            db.execute("UPDATE users SET hash = ? WHERE username = ?", generate_password_hash(password), username)
-            return redirect("/login")
+    #     answers = answer[0]["securitya"]
+    #     # Check to see if answers in sql database matches user response
+    #     if answers != response:
+    #         return apology("Incorrect answer to security question")
+    #     if answers == response:
+    #         # If they do match, update users password and redirect back to login
+    #         db.execute("UPDATE users SET hash = ? WHERE username = ?", generate_password_hash(password), username)
+    #         return redirect("/login")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register user"""
-    if request.method == "POST":
-        # Receive user input about username, password, and their personal preferences
-        username = request.form.get("username")
-        password = request.form.get("password")
-        confirmation = request.form.get("confirmation")
-        avatar = request.form.get("pickavatar")
-        securityq = request.form.get("securityq")
-        securitya = request.form.get("security")
-        color = request.form.get("pickcolor")
-        sound = request.form.get("sound")
-        if not request.form.get("username") or not request.form.get("password") or not request.form.get("confirmation") or not request.form.get("pickavatar") or not request.form.get("security") or not request.form.get("sound") or not request.form.get("pickcolor"):
-            return apology("You have missing information")
-        if password != confirmation:
-            return apology("Passwords need to match")
+    pass 
+    # """Register user"""
+    # if request.method == "POST":
+    #     # Receive user input about username, password, and their personal preferences
+    #     username = request.form.get("username")
+    #     password = request.form.get("password")
+    #     confirmation = request.form.get("confirmation")
+    #     avatar = request.form.get("pickavatar")
+    #     securityq = request.form.get("securityq")
+    #     securitya = request.form.get("security")
+    #     color = request.form.get("pickcolor")
+    #     sound = request.form.get("sound")
+    #     if not request.form.get("username") or not request.form.get("password") or not request.form.get("confirmation") or not request.form.get("pickavatar") or not request.form.get("security") or not request.form.get("sound") or not request.form.get("pickcolor"):
+    #         return apology("You have missing information")
+    #     if password != confirmation:
+    #         return apology("Passwords need to match")
 
-        # Attempt to insert into sql with username as a unique key; if it fails, username is already in use
-        try:
-            query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
-        except:
-            return apology("Username already taken")
-        # Set session id to the result of the query, which is the id number
-        session["user_id"] = query
-        return redirect("/login")
-    else:
-        return render_template("register.html")
+    #     # Attempt to insert into sql with username as a unique key; if it fails, username is already in use
+    #     try:
+    #         query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
+    #     except:
+    #         return apology("Username already taken")
+    #     # Set session id to the result of the query, which is the id number
+    #     session["user_id"] = query
+    #     return redirect("/login")
+    # else:
+    #     return render_template("register.html")
 
 @app.route("/update", methods=["GET", "POST"])
 def update():
-    """Update user preferences"""
-    if request.method == "POST":
-        # Check each field to see if the user has filled it out to submit an update
-        # If they have, update sql database
-        if request.form.get("username"):
-            try:
-                db.execute("UPDATE users SET username = ? WHERE id = ?", request.form.get("username"), session["user_id"])
-            except:
-                return apology ("That username is already in use!")
-        if request.form.get("password"):
-            if not request.form.get("confirmation") or request.form.get("confirmation") != request.form.get("password"):
-                return apology("Password needs to match confirm password")
-            else:
-                db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(request.form.get("password")), session["user_id"])
-        if request.form.get("pickavatar"):
-            db.execute("UPDATE users SET avatar = ? WHERE id = ?", request.form.get("pickavatar"), session["user_id"])
-        if request.form.get("sound"):
-            db.execute("UPDATE users SET sound = ? WHERE id = ?", request.form.get("sound"), session["user_id"])
-        if request.form.get("pickcolor"):
-            db.execute("UPDATE users SET color = ? WHERE id = ?", request.form.get("pickcolor"), session["user_id"])
+    pass
+    # """Update user preferences"""
+    # if request.method == "POST":
+    #     # Check each field to see if the user has filled it out to submit an update
+    #     # If they have, update sql database
+    #     if request.form.get("username"):
+    #         try:
+    #             db.execute("UPDATE users SET username = ? WHERE id = ?", request.form.get("username"), session["user_id"])
+    #         except:
+    #             return apology ("That username is already in use!")
+    #     if request.form.get("password"):
+    #         if not request.form.get("confirmation") or request.form.get("confirmation") != request.form.get("password"):
+    #             return apology("Password needs to match confirm password")
+    #         else:
+    #             db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(request.form.get("password")), session["user_id"])
+    #     if request.form.get("pickavatar"):
+    #         db.execute("UPDATE users SET avatar = ? WHERE id = ?", request.form.get("pickavatar"), session["user_id"])
+    #     if request.form.get("sound"):
+    #         db.execute("UPDATE users SET sound = ? WHERE id = ?", request.form.get("sound"), session["user_id"])
+    #     if request.form.get("pickcolor"):
+    #         db.execute("UPDATE users SET color = ? WHERE id = ?", request.form.get("pickcolor"), session["user_id"])
 
-        # Check to see if users have not chosen the default option (don't change, 'nope'). If they haven't, check to see if they have included an answer for new security question
-        if request.form.get("securityq") != "nope":
-            if not request.form.get("security"):
-                return apology("You need to include an answer to your security question")
-            else:
-                db.execute("UPDATE users SET securityq = ?, securitya = ? WHERE id = ?", request.form.get("securityq"), request.form.get("security"), session["user_id"])
-        # Check to see if users have included an answer but have not selected a security question
-        if request.form.get("security"):
-            if not request.form.get("securityq"):
-                return apology("You need to include a security question for your answer")
-        return redirect("/login")
-    else:
-        return render_template("update.html")
+    #     # Check to see if users have not chosen the default option (don't change, 'nope'). If they haven't, check to see if they have included an answer for new security question
+    #     if request.form.get("securityq") != "nope":
+    #         if not request.form.get("security"):
+    #             return apology("You need to include an answer to your security question")
+    #         else:
+    #             db.execute("UPDATE users SET securityq = ?, securitya = ? WHERE id = ?", request.form.get("securityq"), request.form.get("security"), session["user_id"])
+    #     # Check to see if users have included an answer but have not selected a security question
+    #     if request.form.get("security"):
+    #         if not request.form.get("securityq"):
+    #             return apology("You need to include a security question for your answer")
+    #     return redirect("/login")
+    # else:
+    #     return render_template("update.html")
 
 @app.route("/contactus", methods=["GET", "POST"])
 def contactus():
-    if request.method == "POST":
-        name = request.form.get("name")
-        email = request.form.get("email")
-        message = request.form.get("message")
-        if not request.form.get("message"):
-            return apology("Please give us your message!")
-        if not request.form.get("name") or not request.form.get("email"):
-            return apology("Please include your contact information!")
-        # Contact message sent to our email
-        contact = "%s sent you a message: %s. This is their email address: %s" % (name, message, email)
-        # https://www.youtube.com/watch?v=U5MBYN6an70
-        # Source used to figure out how to send ourselves an email
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        # Server sends an email to deirdre with the contact message from catherine's email account
-        server.login("catherine.sheepy.yang@gmail.com", "check50lol")
-        server.sendmail("catherine.sheepy.yang@gmail.com", "deirdre.flanagan@yale.edu", contact)
-        return redirect("/")
-    else:
-        return render_template("contactus.html")
+    pass
+    # if request.method == "POST":
+    #     name = request.form.get("name")
+    #     email = request.form.get("email")
+    #     message = request.form.get("message")
+    #     if not request.form.get("message"):
+    #         return apology("Please give us your message!")
+    #     if not request.form.get("name") or not request.form.get("email"):
+    #         return apology("Please include your contact information!")
+    #     # Contact message sent to our email
+    #     contact = "%s sent you a message: %s. This is their email address: %s" % (name, message, email)
+    #     # https://www.youtube.com/watch?v=U5MBYN6an70
+    #     # Source used to figure out how to send ourselves an email
+    #     server = smtplib.SMTP("smtp.gmail.com", 587)
+    #     server.starttls()
+    #     # Server sends an email to deirdre with the contact message from catherine's email account
+    #     server.login("catherine.sheepy.yang@gmail.com", "check50lol")
+    #     server.sendmail("catherine.sheepy.yang@gmail.com", "deirdre.flanagan@yale.edu", contact)
+    #     return redirect("/")
+    # else:
+    #     return render_template("contactus.html")
 @app.route("/aboutus")
 def aboutus():
     """About us page"""
