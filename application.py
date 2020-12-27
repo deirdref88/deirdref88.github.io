@@ -164,10 +164,11 @@ def register():
             return apology("Passwords need to match")
 
         # Attempt to insert into sql with username as a unique key; if it fails, username is already in use
-        try:
-            query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
-        except:
-            return apology("Username already taken")
+        # try:
+        #    query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
+        # except:
+        #    return apology("Username already taken")
+        query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
         # Set session id to the result of the query, which is the id number
         session["user_id"] = query
         return redirect("/login")
