@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
+cur = conn.cursor()
 # Ensure responses aren't cached
 @app.after_request
 def after_request(response):
@@ -64,16 +64,19 @@ def login():
             return apology("Input your password")
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
-
+        cur.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = cur.fetchall()
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("Wrong password")
         session["user_id"] = rows[0]["id"]
         # find out which preferences the user has
-        avatar = db.execute("SELECT avatar FROM users WHERE username = ?", request.form.get("username"))
-        sound = db.execute("SELECT sound FROM users WHERE username = ?", request.form.get("username"))
-        color = db.execute("SELECT color FROM users WHERE username = ?", request.form.get("username"))
+        cur.execute("SELECT avatar FROM users WHERE username = ?", request.form.get("username"))
+        avatar = cur.fetchall()
+        cur.execute("SELECT sound FROM users WHERE username = ?", request.form.get("username"))
+        sound = cur.fetchall()
+        cur.execute("SELECT color FROM users WHERE username = ?", request.form.get("username"))
+        color = cur.fetchall()
         # Remember which user has logged in and remember their preferences as session[]
         session["username"] = request.form.get("username")
         session["link"] = avatar[0]['avatar']
@@ -164,7 +167,7 @@ def register():
 
         # Attempt to insert into sql with username as a unique key; if it fails, username is already in use
         try:
-            query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
+            cur.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)     
         except:
             return apology("Username already taken")
         # Set session id to the result of the query, which is the id number
