@@ -168,7 +168,10 @@ def register():
         #    query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
         # except:
         #    return apology("Username already taken")
-        query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
+        try:
+            query = db.execute("INSERT INTO users (username, hash, avatar, securityq, securitya, color, sound) VALUES (?,?,?,?,?,?,?)", username, generate_password_hash(password), avatar, securityq, securitya, color, sound)
+        except:
+           return apology("Username already taken")
         # Set session id to the result of the query, which is the id number
         session["user_id"] = query
         return redirect("/login")
